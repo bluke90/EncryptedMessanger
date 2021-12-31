@@ -9,11 +9,10 @@ namespace EncryptedMessanger
 {
     public class AppManger
     {
-        private static readonly Client Client = new Client(2042);
-        public static Client ClientInstance { get { return Client; } }
+        public Client ClientInstance { get; } = new Client(2042, host: "127.0.0.1");
 
         public AppManger() {
-            Client.StartClientService();
+            
         }
     }
 }

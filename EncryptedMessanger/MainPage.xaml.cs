@@ -7,9 +7,10 @@ namespace EncryptedMessanger
 	public partial class MainPage : ContentPage
 	{
 		int count = 0;
-
-		public MainPage()
-		{
+        private AppManger _appManger;
+		public MainPage(AppManger appManger) {
+            _appManger = appManger;
+            _appManger.ClientInstance.StartClientService();
 			InitializeComponent();
 		}
 
@@ -17,8 +18,8 @@ namespace EncryptedMessanger
 		{
 			count++;
 			// CounterLabel.Text = $"Current count: {count}";
-
-			// SemanticScreenReader.Announce(CounterLabel.Text);
-		}
+            App.Current.MainPage = new MsgPage(_appManger);
+            // SemanticScreenReader.Announce(CounterLabel.Text);
+        }
 	}
 }

@@ -31,7 +31,12 @@ namespace EncryptedMessanger.ClientNet
         private ManualResetEvent _msgCheckComplete;
         private ManualResetEvent _packetCheckComplete;
 
-
+        //debug method
+        private void PurgePackets() {
+            var msgList = ClientContext.Packets.ToList();
+            ClientContext.Packets.RemoveRange(msgList);
+            ClientContext.SaveChanges();
+        }
         public Client(int clientId = 0, int port = 5542, string host = "192.168.137.1")
         {
             ClientId = clientId == 0 ? RandomNumberGenerator.GetInt32(1000, 99999) : clientId;
@@ -40,6 +45,7 @@ namespace EncryptedMessanger.ClientNet
             _packetQueue = new Queue<Packet>();
             ClientContext = new ClientContext();
             _serviceThread = new Thread(ServiceThread);
+            PurgePackets();
         }
         public async void MessageRequest()
         {

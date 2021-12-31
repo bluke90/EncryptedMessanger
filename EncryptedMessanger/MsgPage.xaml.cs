@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using EncryptedMessanger.ClientNet;
@@ -16,18 +17,24 @@ using Microsoft.Maui.Graphics;
 namespace EncryptedMessanger
 {
 
-    public partial class MsgPage : ContentPage
-    {
-        private readonly Client _client;
+    public partial class MsgPage : ContentPage {
+        private AppManger _appManger;
         private readonly ClientContext _context;
-        public MsgPage() {
+        public MsgPage(AppManger appManger) {
+            _appManger = appManger;
+            _context = _appManger.ClientInstance.ClientContext;
             InitializeComponent();
-            _client = AppManger.ClientInstance;
             PopulateMessages();
         }
-
-        private async void PopulateMessages() {
-            var msgList = await _context.Messages.ToListAsync();
+        private async void PopulateMessages(Message newMsg = null) {
+            List<Message> msgList;
+            if (newMsg == null)
+            {
+                msgList = await _context.Messages.ToListAsync();
+            } else {
+                msgList = new List<Message>();
+                msgList.Add(newMsg);
+            }
 
             foreach (var msg in msgList) {
                 var lbl = new Label
@@ -42,19 +49,20 @@ namespace EncryptedMessanger
 
 
         }
-
-
         private void OnSendMsg(object sender, EventArgs e) {
             var _msg = msg.Text;
 
             Message newMsg = new Message()
             {
                 Data = _msg,
-                ClientId = _client.ClientId,
-                RecipientId = 2000
+                ClientId = _appManger.ClientInstance.ClientId,
+                RecipientId = 2042
             };
 
-            _client.SendMessageToServer(newMsg);
+            PopulateMessages(newMsg);
+            _appManger.ClientInstance.SendMessageToServer(newMsg);
+            _context.Messages.Add(newMsg);
+            _context.SaveChanges();
         }
 
 

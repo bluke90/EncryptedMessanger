@@ -24,7 +24,7 @@ namespace EncryptedMessanger.ClientNet.Modules
 
     public static class MessageUtils
     {
-        public static Task SendMessageToServer(this Client client, Message msg) {
+        public static async Task SendMessageToServer(this Client client, Message msg) {
             try
             {
                 // Get data context
@@ -32,7 +32,7 @@ namespace EncryptedMessanger.ClientNet.Modules
                 // Serialize Message to json format
                 var serializedMsg = msg.SerializeMessage();
                 // Generate a client packet using the seialized message data
-                client.GeneratePacket(Handler.Store, "messages", serializedMsg);
+                await client.GeneratePacketAsync(Handler.Store, "messages", serializedMsg);
                 Console.WriteLine(
                     $"Packet Generated => PacketID: {client.Packet.Id} | PacketData-PacketID {client.Packet.PacketData.PacketId}" +
                     $"\n      PacketType: {client.Packet.PacketData.Handler} | PacketParam: {client.Packet.PacketData.Params}");
@@ -44,7 +44,7 @@ namespace EncryptedMessanger.ClientNet.Modules
                 Console.WriteLine(e.ToString());
             }
 
-            return Task.CompletedTask;
+            return;
         }
 
         public static string SerializeMessage(this Message message)

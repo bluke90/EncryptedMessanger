@@ -10,9 +10,10 @@
                 VerticalOptions="StartAndExpand"
                 HorizontalOptions="StartAndExpand"
                 Text="Add Contact"
-                ></Button>
-            
-            
+                Clicked="OnCounterClicked"
+                />
+
+
 
 
 

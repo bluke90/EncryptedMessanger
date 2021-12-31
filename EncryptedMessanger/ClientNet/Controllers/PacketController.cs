@@ -29,6 +29,22 @@ namespace EncryptedMessanger.ClientNet.Controllers
             };
             client.Packet = packet;
         }
+        public static async Task GeneratePacketAsync(this Client client, Handler handler, string param, string data) {
+            await Task.Yield();
+            if (client.Packet != null) client.Packet = null;
+
+            var packet = new Packet();
+            packet.Id = RandomNumberGenerator.GetInt32(1000, 9999);
+            packet.PacketData = new PacketData()
+            {
+                PacketId = packet.Id,
+                ClientId = client.ClientId,
+                Handler = handler,
+                Params = param,
+                Data = data
+            };
+            client.Packet = packet;
+        }
 
         /*
         public static void TransmitPacket(this Client client)
