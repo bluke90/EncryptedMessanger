@@ -13,6 +13,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Maui.Graphics;
+using System.Threading;
+using System.Collections.ObjectModel;
 
 namespace EncryptedMessanger
 {
@@ -20,29 +22,62 @@ namespace EncryptedMessanger
     public partial class MsgPage : ContentPage {
         private AppManger _appManger;
         private readonly ClientContext _context;
+        private ObservableCollection<Message> _messages;
+        private Queue<Message> _messagesQueue;
+        private Thread _thread;
         public MsgPage(AppManger appManger) {
             _appManger = appManger;
             _context = _appManger.ClientInstance.ClientContext;
+            _messages = new ObservableCollection<Message>();
+            _messagesQueue = new Queue<Message>();
             InitializeComponent();
-            PopulateMessages();
+            _messages.CollectionChanged += PopulateQueuedMessage;
+            _thread = new Thread(MessageRefreash);
+            _thread.Start();
         }
-        private async void PopulateMessages(Message newMsg = null) {
-            List<Message> msgList;
-            if (newMsg == null)
-            {
-                msgList = await _context.Messages.ToListAsync();
-            } else {
-                msgList = new List<Message>();
-                msgList.Add(newMsg);
-            }
 
-            foreach (var msg in msgList) {
+
+        private void MessageRefreash() {
+            while (true) {
+                foreach (var message in _context.Messages.ToList()) {
+                    if (!_messages.Contains(message)) {
+                        _messagesQueue.Enqueue(message);
+                        _messages.Add(message);
+                    }
+                }
+                Thread.Sleep(1000);
+            }
+        }
+
+        private void PopulateQueuedMessage(object sender, EventArgs args) {
+            for (int i = 0; i <= _messagesQueue.Count; i++) {
+
+                var msg = _messagesQueue.Dequeue();
+                PopulateNewMessage(msg);
+            }
+        }
+
+        private void PopulateNewMessage(Message msg) {
+            var lbl = new Label
+            {
+                Text = $"From: {msg.ClientId} \n {msg.Data}",
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                TextColor = Colors.White,
+                BackgroundColor = Color.FromArgb("121212")
+            };
+            msgs.Add(lbl);
+        }
+
+        private void PopulateMessages() {
+            
+
+            foreach (var msg in _messages) {
                 var lbl = new Label
                 {
                     Text = $"From: {msg.ClientId} \n {msg.Data}",
                     HorizontalOptions = LayoutOptions.FillAndExpand,
                     TextColor = Colors.White,
-                    BackgroundColor = Colors.DarkGrey,
+                    BackgroundColor = Color.FromArgb("121212")
                 };
                 msgs.Add(lbl);
             }
@@ -59,7 +94,7 @@ namespace EncryptedMessanger
                 RecipientId = 2042
             };
 
-            PopulateMessages(newMsg);
+            PopulateNewMessage(newMsg);
             _appManger.ClientInstance.SendMessageToServer(newMsg);
             _context.Messages.Add(newMsg);
             _context.SaveChanges();
