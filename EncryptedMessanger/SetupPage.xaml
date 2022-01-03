@@ -1,0 +1,32 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EncryptedMessanger.SetupPage"
+             BackgroundColor="{DynamicResource SecondaryColor}">
+
+    <VerticalStackLayout>
+        <Label 
+            Text="Hello, Welcome to Encrypted Messenger!"
+            FontSize="Header"
+            HorizontalOptions="CenterAndExpand"/>
+        <Label 
+            Text="Your Nickname (Only you will see this)"
+            FontSize="Body"
+            HorizontalOptions="CenterAndExpand"/>
+        <Entry 
+            x:Name="NicknameEntry"
+            HorizontalOptions="CenterAndExpand"/>
+        <Label 
+            Text="Contact ID (This Will be generated once you save your nickname)"/>
+        <Entry 
+            IsReadOnly="True"
+            x:Name="ContactIdEntry"
+            HorizontalOptions="CenterAndExpand"/>
+        <Button
+            x:Name="ContinueBtn"
+            Text="Continue"
+            Clicked="OnGenerateId"
+            HorizontalOptions="CenterAndExpand"
+            />
+    </VerticalStackLayout>
+
+</ContentPage>

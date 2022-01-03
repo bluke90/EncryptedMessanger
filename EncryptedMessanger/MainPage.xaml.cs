@@ -12,6 +12,8 @@ namespace EncryptedMessanger
             _appManger = appManger;
             _appManger.ClientInstance.StartClientService();
 			InitializeComponent();
+
+
 		}
 
 		private void OnCounterClicked(object sender, EventArgs e)

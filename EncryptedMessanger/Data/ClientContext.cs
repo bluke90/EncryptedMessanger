@@ -14,6 +14,7 @@ namespace EncryptedMessanger.Data
     {
         public DbSet<Message> Messages { get; set; }
         public DbSet<Packet> Packets { get; set; }
+        public DbSet<EncryptedMessanger.Modules.Contact> Contacts { get; set; }
         public ClientContext() {
             SQLitePCL.Batteries_V2.Init();
 

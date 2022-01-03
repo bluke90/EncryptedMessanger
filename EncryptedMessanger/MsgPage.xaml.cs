@@ -53,7 +53,7 @@ namespace EncryptedMessanger
             for (int i = 0; i <= _messagesQueue.Count; i++) {
 
                 var msg = _messagesQueue.Dequeue();
-                PopulateNewMessage(msg);
+                App.Current.Dispatcher.BeginInvokeOnMainThread(() => PopulateNewMessage(msg));
             }
         }
 
@@ -68,22 +68,6 @@ namespace EncryptedMessanger
             msgs.Add(lbl);
         }
 
-        private void PopulateMessages() {
-            
-
-            foreach (var msg in _messages) {
-                var lbl = new Label
-                {
-                    Text = $"From: {msg.ClientId} \n {msg.Data}",
-                    HorizontalOptions = LayoutOptions.FillAndExpand,
-                    TextColor = Colors.White,
-                    BackgroundColor = Color.FromArgb("121212")
-                };
-                msgs.Add(lbl);
-            }
-
-
-        }
         private void OnSendMsg(object sender, EventArgs e) {
             var _msg = msg.Text;
 
@@ -94,7 +78,6 @@ namespace EncryptedMessanger
                 RecipientId = 2042
             };
 
-            PopulateNewMessage(newMsg);
             _appManger.ClientInstance.SendMessageToServer(newMsg);
             _context.Messages.Add(newMsg);
             _context.SaveChanges();
