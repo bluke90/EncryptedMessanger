@@ -3,28 +3,76 @@
              x:Class="EncryptedMessanger.SetupPage"
              BackgroundColor="{DynamicResource SecondaryColor}">
 
-    <VerticalStackLayout>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="BoxView">
+                <Setter Property="Color" Value="Black"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <VerticalStackLayout
+        Spacing="20">
         <Label 
             Text="Hello, Welcome to Encrypted Messenger!"
             FontSize="Header"
             HorizontalOptions="CenterAndExpand"/>
-        <Label 
-            Text="Your Nickname (Only you will see this)"
-            FontSize="Body"
-            HorizontalOptions="CenterAndExpand"/>
-        <Entry 
-            x:Name="NicknameEntry"
-            HorizontalOptions="CenterAndExpand"/>
-        <Label 
-            Text="Contact ID (This Will be generated once you save your nickname)"/>
-        <Entry 
-            IsReadOnly="True"
-            x:Name="ContactIdEntry"
-            HorizontalOptions="CenterAndExpand"/>
+        <Frame
+            CornerRadius="15"
+            BackgroundColor="MidnightBlue"
+            BorderColor="Black"
+            WidthRequest="840"
+            HorizontalOptions="CenterAndExpand"
+            HasShadow="True">
+            <VerticalStackLayout 
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Spacing="10"
+                >
+                <Label 
+                    Text="Your Nickname (Only you will see this)"
+                    FontSize="Small"
+                    HorizontalOptions="Center"/>
+                <Entry 
+                    x:Name="NicknameEntry"
+                    HorizontalOptions="Center"
+                    MinimumWidthRequest="250"/>
+            </VerticalStackLayout>
+        </Frame>
+        
+        <Frame
+            CornerRadius="15"
+            BackgroundColor="MidnightBlue"
+            BorderColor="Black"
+            WidthRequest="840"
+            HorizontalOptions="CenterAndExpand"
+            HasShadow="True">
+            <VerticalStackLayout 
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="CenterAndExpand"
+                Spacing="25">
+                <Label 
+                    Text="Contact ID (This will be generated once you save your nickname)"
+                    FontSize="Small"
+                    HorizontalOptions="Center"/>
+                <Entry 
+                    IsReadOnly="True"
+                    x:Name="ContactIdEntry"
+                    HorizontalOptions="Center"
+                    MinimumWidthRequest="250"/>
+            </VerticalStackLayout>
+        </Frame>
+
         <Button
             x:Name="ContinueBtn"
-            Text="Continue"
-            Clicked="OnGenerateId"
+            Text="Generate ID"
+            FontAttributes="Bold"
+            FontSize="Small"
+            BackgroundColor="DarkBlue" 
+            TextColor="White"
+            Padding="30,12"
+            BorderColor="Black"
             HorizontalOptions="CenterAndExpand"
             />
     </VerticalStackLayout>

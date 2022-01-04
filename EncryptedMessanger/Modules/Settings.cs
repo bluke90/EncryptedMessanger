@@ -22,7 +22,15 @@ namespace EncryptedMessanger.Modules
             var bytes = Encoding.UTF8.GetBytes(strData);
             return bytes;
         }
-        public static Task Deserialize(this Settings settings, byte[] bytes) {
+
+        public static Settings Deserialize(this Settings settings, byte[] bytes) {
+            if (settings == null) { settings = new Settings(); }
+            var strData = Encoding.UTF8.GetString(bytes);
+            settings = JsonSerializer.Deserialize<Settings>(strData);
+            return settings;
+        }
+
+        public static Task DeserializeAsync(this Settings settings, byte[] bytes) {
             if (settings == null) { settings = new Settings(); }
             var strData = Encoding.UTF8.GetString(bytes);
             settings = JsonSerializer.Deserialize<Settings>(strData);

@@ -12,7 +12,7 @@ using System.IO;
 namespace EncryptedMessanger.Handlers
 {
     public class SettingsHandler {
-        public Settings Settings { get; private set; }
+        public Settings Settings { get; set; }
         private const string settingsFileName = "SettingsData.emm";
         private readonly string path = FileSystem.AppDataDirectory;
         private readonly string path_name;
@@ -21,15 +21,16 @@ namespace EncryptedMessanger.Handlers
             path_name = Path.Combine(path, settingsFileName);
             ReadSettingsFromFile();
         }
+        public void SaveChanges() => WriteSettingsToFile();
 
 
         // Read
-        private async void ReadSettingsFromFile() {
+        private void ReadSettingsFromFile() {
 
             if (!File.Exists(path_name)) Create();
 
-            var bytes = await File.ReadAllBytesAsync(path_name);
-            await Settings.Deserialize(bytes);
+            var bytes = File.ReadAllBytes(path_name);
+            Settings = Settings.Deserialize(bytes);
         }
 
         // Write

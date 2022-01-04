@@ -12,10 +12,11 @@ namespace EncryptedMessanger
         private AppManger _appManger;
         public App() {
             _appManger = new AppManger();
-			
-            InitializeComponent();
 
-            MainPage = new MainPage(_appManger);
+            InitializeComponent();
+            if (_appManger.SettingsHandler.Settings == null || _appManger.SettingsHandler.Settings.ContactId == null || _appManger.SettingsHandler.Settings.ContactId < 1000) {
+                MainPage = new SetupPage(_appManger);
+            } else { MainPage = new MainPage(_appManger); }
         }
     }
 }

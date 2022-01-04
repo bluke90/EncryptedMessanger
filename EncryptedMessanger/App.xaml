@@ -7,8 +7,8 @@
     <Application.Resources>
         <ResourceDictionary>
 
-            <Color x:Key="PrimaryColor">#512bdf</Color>
-            <Color x:Key="SecondaryColor">#181818</Color>
+            <Color x:Key="PrimaryColor">White</Color>
+            <Color x:Key="SecondaryColor">#151515</Color>
 
             <Style TargetType="Label">
                 <Setter Property="TextColor" Value="{DynamicResource PrimaryColor}" />

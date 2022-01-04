@@ -54,6 +54,13 @@ namespace EncryptedMessanger.ClientNet.Controllers
             client.StartClient(searializedData);
         }
         */
+        public static void DeserializePacketData(this Client client) {
+            if (client.Packet.PacketData.Response == null || client.Packet.PacketData.Response.Length == 0) throw new ArgumentNullException();
+            var packet = client.Packet;
+            var resp = packet.PacketData.Response;
+            packet.PacketData = JsonSerializer.Deserialize<PacketData>(resp);
+        }
+
         public static int HandlePacketResponse(this Client client)
         {
             if (client.Packet.PacketData.Response == null || client.Packet.PacketData.Response.Length == 0) return 0;

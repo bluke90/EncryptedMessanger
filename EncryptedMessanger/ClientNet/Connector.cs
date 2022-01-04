@@ -16,6 +16,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EncryptedMessanger.ClientNet
 {
+    public static class GenericClient
+    {
+        public static async Task<int> RequestContactId() {
+            Client client = new Client(clientId: 1);
+            client.GeneratePacket(Handler.Request, "newContactId", "");
+            await client.TransmitPacket();
+            client.DeserializePacketData();
+            string resp = null;
+            while (resp == null) {
+                try {
+                    resp = client.GetResponse();
+                } catch { continue; }
+            }
+            return Convert.ToInt32(resp);
+        }
+    }
 
     public class Client
     {
@@ -37,7 +53,7 @@ namespace EncryptedMessanger.ClientNet
             ClientContext.Packets.RemoveRange(msgList);
             ClientContext.SaveChanges();
         }
-        public Client(int clientId = 0, int port = 5542, string host = "192.168.137.1")
+        public Client(int clientId = 0, int port = 5542, string host = "127.0.0.1")
         {
             ClientId = clientId == 0 ? RandomNumberGenerator.GetInt32(1000, 99999) : clientId;
             Port = port;
@@ -136,6 +152,7 @@ namespace EncryptedMessanger.ClientNet
             ClientContext.SaveChanges();
         }
 
+        public string GetResponse() => Packet.PacketData.Response;
 
     }
 
