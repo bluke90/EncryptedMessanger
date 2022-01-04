@@ -16,6 +16,10 @@ namespace EncryptedMessanger
 
 		}
 
+		private void OnAddContactClicked(object sender, EventArgs e) {
+			App.Current.MainPage = new AddContactPage(_appManger);
+        }
+
 		private void OnCounterClicked(object sender, EventArgs e)
 		{
 			count++;
@@ -23,5 +27,13 @@ namespace EncryptedMessanger
             App.Current.MainPage = new MsgPage(_appManger);
             // SemanticScreenReader.Announce(CounterLabel.Text);
         }
+
+		private static Button GenerateContactButton(string Text, string contactNickname, string contactId) {
+			Button button = new Button()
+            {
+				Text = ContactNickname
+            };
+        }
+
 	}
 }

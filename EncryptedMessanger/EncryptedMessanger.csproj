@@ -62,6 +62,9 @@
 
 
 	<ItemGroup>
+	  <MauiXaml Update="AddContactPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="SetupPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
