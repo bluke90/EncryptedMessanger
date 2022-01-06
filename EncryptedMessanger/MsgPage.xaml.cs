@@ -25,7 +25,9 @@ namespace EncryptedMessanger
         private ObservableCollection<Message> _messages;
         private Queue<Message> _messagesQueue;
         private Thread _thread;
-        public MsgPage(AppManger appManger) {
+        private int _contactId;
+        public MsgPage(AppManger appManger, string contact) {
+            _contactId = Convert.ToInt32(contact);
             _appManger = appManger;
             _context = _appManger.ClientInstance.ClientContext;
             _messages = new ObservableCollection<Message>();
@@ -39,7 +41,7 @@ namespace EncryptedMessanger
 
         private void MessageRefreash() {
             while (true) {
-                foreach (var message in _context.Messages.ToList()) {
+                foreach (var message in _context.Messages.Where(m => m.ClientId == _contactId || m.RecipientId == _contactId).ToList()) {
                     if (!_messages.Contains(message)) {
                         _messagesQueue.Enqueue(message);
                         _messages.Add(message);
@@ -75,7 +77,7 @@ namespace EncryptedMessanger
             {
                 Data = _msg,
                 ClientId = _appManger.ClientInstance.ClientId,
-                RecipientId = 2042
+                RecipientId = _contactId
             };
 
             _appManger.ClientInstance.SendMessageToServer(newMsg);

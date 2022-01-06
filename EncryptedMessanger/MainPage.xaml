@@ -3,20 +3,42 @@
              x:Class="EncryptedMessanger.MainPage"
              BackgroundColor="{DynamicResource SecondaryColor}">
 
-    <ScrollView>
-        <VerticalStackLayout x:Name="contactStack">
-            <Button
-                x:Name="addContactClick"
-                VerticalOptions="StartAndExpand"
-                HorizontalOptions="StartAndExpand"
-                Text="Add Contact"
-                Clicked="OnCounterClicked"
-                />
+
+    <VerticalStackLayout
+        VerticalOptions="FillAndExpand"
+        HorizontalOptions="FillAndExpand">
+        <Button
+            x:Name="addContactClick"
+            VerticalOptions="StartAndExpand"
+            HorizontalOptions="StartAndExpand"
+            Text="Add Contact"
+            Clicked="OnAddContactClicked"
+            />
+        <Label
+            Text="Choose a contact to start Messaging!"
+            FontSize="Large"
+            x:Name="headerTitle"
+            VerticalOptions="StartAndExpand"
+            HorizontalOptions="CenterAndExpand"/>
+        <Frame 
+            BackgroundColor="Black"
+            CornerRadius="5"
+            BorderColor="MediumBlue"
+            WidthRequest="850"
+            HorizontalOptions="CenterAndExpand"
+            VerticalOptions="CenterAndExpand"
+            >
+            <VerticalStackLayout 
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="CenterAndExpand"
+                x:Name="contactStack"
+                Spacing="10">
+            </VerticalStackLayout>
+        </Frame>
 
 
 
 
 
-        </VerticalStackLayout>
-    </ScrollView>
+    </VerticalStackLayout>
 </ContentPage>

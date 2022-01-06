@@ -12,7 +12,7 @@
                     HorizontalOptions="Center"/>
                 <Entry
                     x:Name="ContactNickname"
-                    MinimumHeightRequest="250"
+                    MinimumWidthRequest="250"
                     HorizontalOptions="Center"/>
             </VerticalStackLayout>
         </Frame>
@@ -23,7 +23,7 @@
                     HorizontalOptions="Center"/>
                 <Entry
                     x:Name="ContactId"
-                    MinimumHeightRequest="250"
+                    MinimumWidthRequest="250"
                     HorizontalOptions="Center"/>
             </VerticalStackLayout>
         </Frame>

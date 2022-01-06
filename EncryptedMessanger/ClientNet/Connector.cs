@@ -83,6 +83,7 @@ namespace EncryptedMessanger.ClientNet
         }
 
         public void StartClientService() {
+            if (_serviceThread.IsAlive) { return; }
             _serviceThread.Start();
         }
 
