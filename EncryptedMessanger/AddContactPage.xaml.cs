@@ -25,5 +25,10 @@ namespace EncryptedMessanger
             context.SaveChanges();
             App.Current.MainPage = new MainPage(_appManager);
         }
+
+        private void OnGoBack(object sender, EventArgs args) {
+            App.Current.MainPage = new MainPage(_appManager);
+        
+        }
     }
 }

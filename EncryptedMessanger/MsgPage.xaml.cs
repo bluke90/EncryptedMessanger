@@ -40,14 +40,19 @@ namespace EncryptedMessanger
 
 
         private void MessageRefreash() {
-            while (true) {
-                foreach (var message in _context.Messages.Where(m => m.ClientId == _contactId || m.RecipientId == _contactId).ToList()) {
-                    if (!_messages.Contains(message)) {
-                        _messagesQueue.Enqueue(message);
-                        _messages.Add(message);
+            try {
+                while (true) {
+                    foreach (var message in _context.Messages.Where(m => m.ClientId == _contactId || m.RecipientId == _contactId).ToList()) {
+                        if (!_messages.Contains(message)) {
+                            _messagesQueue.Enqueue(message);
+                            _messages.Add(message);
+                        }
                     }
+                    Thread.Sleep(1000);
                 }
+            } catch (InvalidOperationException ex) {
                 Thread.Sleep(1000);
+                MessageRefreash();
             }
         }
 
@@ -55,19 +60,34 @@ namespace EncryptedMessanger
             for (int i = 0; i <= _messagesQueue.Count; i++) {
 
                 var msg = _messagesQueue.Dequeue();
-                App.Current.Dispatcher.BeginInvokeOnMainThread(() => PopulateNewMessage(msg));
+                App.Current.Dispatcher.Dispatch(() => PopulateNewMessage(msg));
             }
         }
 
         private void PopulateNewMessage(Message msg) {
+            LayoutOptions layoutOptions = LayoutOptions.FillAndExpand;
+            string msgData;
+            if (msg.ClientId == _appManger.SettingsHandler.Settings.ContactId) {
+                msgData = $"To: {msg.RecipientId} \n {msg.Data}";
+            } else { 
+                msgData = $"From: {msg.ClientId} \n {msg.Data}";
+            }
+            var blnkLbl = new Label() { HeightRequest = 50 };
             var lbl = new Label
             {
-                Text = $"From: {msg.ClientId} \n {msg.Data}",
-                HorizontalOptions = LayoutOptions.FillAndExpand,
+                Text = msgData,
+                HorizontalOptions = layoutOptions,
                 TextColor = Colors.White,
-                BackgroundColor = Color.FromArgb("121212")
+                BackgroundColor = Color.FromArgb("121212"),
+                Padding = 15
             };
-            msgs.Add(lbl);
+            if (msg.ClientId == _appManger.SettingsHandler.Settings.ContactId) {
+                toMsgs.Add(lbl);
+                frmMsgs.Add(blnkLbl);
+            } else {
+                frmMsgs.Add(lbl);
+                toMsgs.Add(blnkLbl);
+            }
         }
 
         private void OnSendMsg(object sender, EventArgs e) {
@@ -85,7 +105,9 @@ namespace EncryptedMessanger
             _context.SaveChanges();
         }
 
-
+        private void OnGoBack(object sender, EventArgs e) {
+            App.Current.MainPage = new MainPage(_appManger);
+        }
 
     }
 }

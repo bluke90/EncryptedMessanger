@@ -4,33 +4,44 @@
              BackgroundColor="{DynamicResource SecondaryColor}">
 
 
-    <VerticalStackLayout
-        VerticalOptions="FillAndExpand"
-        HorizontalOptions="FillAndExpand">
+    <Grid ColumnSpacing="25">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="350"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="350"/>
+        </Grid.ColumnDefinitions>
         <Button
             x:Name="addContactClick"
-            VerticalOptions="StartAndExpand"
-            HorizontalOptions="StartAndExpand"
+            GridLayout.Column ="0"
+            GridLayout.Row ="0"
             Text="Add Contact"
+            TextColor="SeaShell"
             Clicked="OnAddContactClicked"
-            />
+            Margin="10"
+            BorderColor="MediumBlue"
+            BackgroundColor="#050505"
+            BorderWidth="1"/>
         <Label
             Text="Choose a contact to start Messaging!"
             FontSize="Large"
             x:Name="headerTitle"
-            VerticalOptions="StartAndExpand"
-            HorizontalOptions="CenterAndExpand"/>
+            GridLayout.Column ="1"
+            GridLayout.Row ="0"
+            HorizontalTextAlignment="Center"/>
         <Frame 
             BackgroundColor="Black"
             CornerRadius="5"
             BorderColor="MediumBlue"
-            WidthRequest="850"
-            HorizontalOptions="CenterAndExpand"
-            VerticalOptions="CenterAndExpand"
+            GridLayout.Column ="1"
+            GridLayout.Row ="1"
             >
             <VerticalStackLayout 
-                HorizontalOptions="CenterAndExpand"
-                VerticalOptions="CenterAndExpand"
+                VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand"
                 x:Name="contactStack"
                 Spacing="10">
             </VerticalStackLayout>
@@ -40,5 +51,5 @@
 
 
 
-    </VerticalStackLayout>
+    </Grid>
 </ContentPage>

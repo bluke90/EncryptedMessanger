@@ -3,10 +3,11 @@
              x:Class="EncryptedMessanger.AddContactPage"
              BackgroundColor="{DynamicResource SecondaryColor}">
 
-    <VerticalStackLayout>
 
-        <Frame>
-            <VerticalStackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Spacing="15">
+    <VerticalStackLayout Spacing="10" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+
+        <Frame WidthRequest="1000">
+            <VerticalStackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="Center" Spacing="15">
                 <Label
                     Text="Contact Nickname:"
                     HorizontalOptions="Center"/>
@@ -31,7 +32,13 @@
         <Button
             Text="Add Contact"
             HorizontalOptions="Center"
+            VerticalOptions="StartAndExpand"
             Clicked="OnAddContact"/>
+        <Button
+            Text="Go Back"
+            HorizontalOptions="Center"
+            VerticalOptions="EndAndExpand"
+            Clicked="OnGoBack"/>        
 
     </VerticalStackLayout>
     

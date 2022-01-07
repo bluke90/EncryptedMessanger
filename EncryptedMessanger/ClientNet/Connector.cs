@@ -61,6 +61,7 @@ namespace EncryptedMessanger.ClientNet
             _packetQueue = new Queue<Packet>();
             ClientContext = new ClientContext();
             _serviceThread = new Thread(ServiceThread);
+            _serviceThread.Name = "Network Client Service Thread";
             PurgePackets();
         }
         public async void MessageRequest()
@@ -84,7 +85,7 @@ namespace EncryptedMessanger.ClientNet
 
         public void StartClientService() {
             if (_serviceThread.IsAlive) { return; }
-            _serviceThread.Start();
+                _serviceThread.Start();
         }
 
         private async void ServiceThread() {
@@ -141,7 +142,13 @@ namespace EncryptedMessanger.ClientNet
         /// </summary>
         /// <returns></returns>
         private async Task QueuePastPackets() {
-            var messages = await ClientContext.Packets.ToListAsync();
+            List<Packet> messages;
+            try {
+                messages = await ClientContext.Packets.ToListAsync();
+            } catch (InvalidOperationException e) {
+                Thread.Sleep(500);
+                messages = await ClientContext.Packets.ToListAsync();
+            }
             foreach (var message in messages) {
                 _packetQueue.Enqueue(message);
             }

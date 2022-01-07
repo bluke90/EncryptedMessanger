@@ -3,43 +3,66 @@
              x:Class="EncryptedMessanger.MsgPage"
              BackgroundColor="{DynamicResource SecondaryColor}">
 
-    <AbsoluteLayout
-        Padding="30"
-        HorizontalOptions="CenterAndExpand"
-        VerticalOptions="CenterAndExpand">
+    <Grid GridLayout.ColumnSpan="3" GridLayout.RowSpan="3" ColumnSpacing="30" RowSpacing="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="225"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="150"/>
+        </Grid.ColumnDefinitions>
+        <Button
+            x:Name="backBtn"
+            Text="Go Back"
+            Clicked="OnGoBack"
+            GridLayout.Column="0"
+            GridLayout.Row="0"/>
+        <Frame 
+            GridLayout.Column="1"
+            GridLayout.Row="1">
+            <Grid GridLayout.ColumnSpan="2">
+                <GridLayout.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="2*"/>
+                </GridLayout.ColumnDefinitions>
+                <VerticalStackLayout
+                    x:Name="toMsgs"
+                    Spacing="15"
+                    GridLayout.Column="0">
+                </VerticalStackLayout>
+                <VerticalStackLayout
+                    x:Name="frmMsgs"
+                    Spacing="15"
+                    GridLayout.Column="1">
+                </VerticalStackLayout>
+            </Grid>
+        </Frame>
         <VerticalStackLayout
-            x:Name="msgs" 
-            VerticalOptions="CenterAndExpand"
-            HorizontalOptions="CenterAndExpand"
-            Spacing="15"
-            />
-        <AbsoluteLayout
-            VerticalOptions="EndAndExpand"
-            HorizontalOptions="CenterAndExpand"
-            AbsoluteLayout.LayoutBounds="0,0,1,1"
-            AbsoluteLayout.LayoutFlags="All"
-            >
-            <StackLayout
+            GridLayout.Column="1"
+            GridLayout.Row="2"
+            Spacing="10">
+            <Entry
+                x:Name="msg"
+                VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand"
+                MinimumWidthRequest="1000"
+                MinimumHeightRequest="100"
+                HorizontalTextAlignment="Start"
+                VerticalTextAlignment="Start"/>
+            <Button 
+                Text="Send"
+                HorizontalOptions="FillAndExpand"
                 VerticalOptions="EndAndExpand"
-                HorizontalOptions="CenterAndExpand"
-                Spacing="10"
-            >
-                <Entry
-                    x:Name="msg"
-                    VerticalOptions="FillAndExpand"
-                    HorizontalOptions="FillAndExpand"
-                    MinimumWidthRequest="1000"
-                    MinimumHeightRequest="50"
-                />
-                <Button 
-                    Text="Send"
-                    HorizontalOptions="FillAndExpand"
-                    VerticalOptions="EndAndExpand"
-                    Clicked="OnSendMsg"
-                />
-            </StackLayout>
+                Clicked="OnSendMsg"
+                BackgroundColor="MidnightBlue"
+                TextColor="White"
+                FontSize="Small"
+                FontAttributes="Bold"/>
+            </VerticalStackLayout>
 
-        </AbsoluteLayout>
-    </AbsoluteLayout>
+    </Grid>
     
 </ContentPage>

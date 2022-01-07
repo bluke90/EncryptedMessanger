@@ -16,7 +16,6 @@ namespace EncryptedMessanger
 		private List<EncryptedMessanger.Modules.Contact> Contacts;
 		public MainPage(AppManger appManger) {
             _appManger = appManger;
-            _appManger.ClientInstance.StartClientService();
 			InitializeComponent();
 			PopulateContacts();
 			//headerTitle.Text = FileSystem.AppDataDirectory;
@@ -37,12 +36,17 @@ namespace EncryptedMessanger
         }
 
 		private Button GenerateContactButton(EncryptedMessanger.Modules.Contact contact) {
+
 			Button button = new Button()
-            {
+			{
 				Text = contact.Name,
+				TextColor = Colors.SeaShell,
 				BindingContext = contact.ContactId.ToString(),
+				BackgroundColor = Color.FromArgb("#080808"),
 				BorderColor = Colors.MidnightBlue,
-				VerticalOptions = LayoutOptions.FillAndExpand
+				BorderWidth = 1,
+				VerticalOptions = LayoutOptions.FillAndExpand,
+				HorizontalOptions = LayoutOptions.FillAndExpand
             };
 			button.Clicked += OpenMsgPage;
 			return button;

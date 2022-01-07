@@ -12,11 +12,16 @@ namespace EncryptedMessanger
 {
     public class AppManger
     {
-        public Client ClientInstance { get; } = new Client(2042, host: "127.0.0.1");
+        public Client ClientInstance { get; }
         public SettingsHandler SettingsHandler { get; private set; }
 
         public AppManger() {
             SettingsHandler = new SettingsHandler();
+            if (SettingsHandler.Settings.ContactId > 1) {
+                ClientInstance = new Client(clientId: SettingsHandler.Settings.ContactId.Value);
+                ClientInstance.StartClientService();
+            } else { ClientInstance = null; }
+
         }
     }
 }
